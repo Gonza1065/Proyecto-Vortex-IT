@@ -1,7 +1,8 @@
 const Product = require("../models/product");
+const Category = require("../models/category");
 const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate("category");
     res.status(200).json(products);
   } catch (err) {
     res.status(400).json({ message: "Couldn't find the products" });
@@ -38,9 +39,20 @@ const addProduct = async (req, res, next) => {
   const { title, description, category, price } = req.body;
 
   try {
-    const newProduct = new Product({ title, description, category, price });
-    await newProduct.save();
-    return res.status(201).json(newProduct);
+    const categoryDocument = await Category.findOne({ name: category });
+    if (categoryDocument) {
+      const categoryId = categoryDocument._id;
+      const newProduct = new Product({
+        title,
+        description,
+        category: categoryId,
+        price,
+      });
+      await newProduct.save();
+      return res.status(201).json(newProduct);
+    } else {
+      return res.status(404).json({ message: "Category not found" });
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Error couldn't add the product" });

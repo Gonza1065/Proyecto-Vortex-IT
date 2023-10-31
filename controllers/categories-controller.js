@@ -39,11 +39,10 @@ const addCategory = async (req, res, next) => {
 
   try {
     const existingCategory = await Product.findOne({ category: name });
-    console.log(existingCategory);
     if (existingCategory) {
-      return res
-        .status(404)
-        .json({ message: "Couldn't add the category because already exist" });
+      return res.status(409).json({
+        message: "Couldn't add the category because already exist",
+      });
     } else {
       const newCategory = new Category({ name });
       await newCategory.save();
@@ -57,23 +56,25 @@ const addCategory = async (req, res, next) => {
 
 const updateCategory = async (req, res, next) => {
   const categoryId = req.params.id;
-  const updateData = req.body;
+  const { name } = req.body;
+
   try {
     const updatedCategory = await Category.findByIdAndUpdate(
       categoryId,
-      updateData,
+      { name },
       { new: true }
     );
+
     if (updatedCategory) {
       return res.status(200).json(updatedCategory);
     } else {
       return res
         .status(404)
-        .json({ message: "Couldn't find for ID for update the category" });
+        .json({ message: "Category not found for updating" });
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Error for update the category" });
+    return res.status(500).json({ message: "Error updating the category" });
   }
 };
 
@@ -81,14 +82,18 @@ const deleteCategory = async (req, res, next) => {
   const categoryId = req.params.id;
 
   try {
-    const deletedCategory = await Category.findByIdAndRemove(categoryId);
-    if (deletedCategory) {
-      return res.status(200).json(deletedCategory);
-    } else {
+    const categoryToDelete = await Category.findById(categoryId);
+    if (!categoryToDelete) {
       return res
         .status(404)
-        .json({ message: "Couldn't find the category by ID for delete it " });
+        .json({ message: "Category not found for delete it" });
     }
+    const deletedCategory = await Category.findByIdAndRemove(categoryId);
+    await Product.updateMany(
+      { category: categoryToDelete._id },
+      { category: null }
+    );
+    return res.status(200).json(deletedCategory);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Error for delete the category" });
