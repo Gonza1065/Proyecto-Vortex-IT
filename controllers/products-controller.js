@@ -1,43 +1,44 @@
+// Importing the models
 const Product = require("../models/product");
 const Category = require("../models/category");
+
+// http://localhost:5000/api/products <- URL where the function is executed
 const getProducts = async (req, res, next) => {
   try {
     const products = await Product.find().populate("category");
-    res.status(200).json(products);
+    return res.status(200).json(products);
   } catch (err) {
-    res.status(400).json({ message: "Couldn't find the products" });
-    console.log(err);
+    return res.status(400).json({ message: "Couldn't find the products" });
   }
 };
 
+// http://localhost:5000/api/products/category/:category <- URL where the function is executed
 const getProductsByCategory = async (req, res, next) => {
   const productCategory = req.params.category;
-
   try {
     const productsByCategory = await Product.find({
       category: productCategory,
-    });
-    return res.status(201).json(productsByCategory);
+    }).populate("category");
+    return res.status(200).json(productsByCategory);
   } catch (err) {
-    console.log(err);
     return res.status(404).json({ message: "Products by category not found" });
   }
 };
 
+// http://localhost:5000/api/products/:id <- URL where the function is executed
 const getProductById = async (req, res, next) => {
   const productId = req.params.id;
   try {
-    const product = await Product.findById(productId);
-    res.status(201).json(product);
+    const product = await Product.findById(productId).populate("category");
+    return res.status(200).json(product);
   } catch (err) {
-    console.log(err);
-    res.status(404).json({ message: "Couldn't find the product by ID" });
+    return res.status(404).json({ message: "Couldn't find the product by ID" });
   }
 };
 
+// http://localhost:5000/api/products/add-product <- URL where the function is executed
 const addProduct = async (req, res, next) => {
   const { title, description, category, price } = req.body;
-
   try {
     const categoryDocument = await Category.findOne({ name: category });
     if (categoryDocument) {
@@ -54,11 +55,11 @@ const addProduct = async (req, res, next) => {
       return res.status(404).json({ message: "Category not found" });
     }
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ message: "Error couldn't add the product" });
   }
 };
 
+// http://localhost:5000/api/products/update-product/:id <- URL where the function is executed
 const updateProduct = async (req, res, next) => {
   const productId = req.params.id;
   const updateData = req.body;
@@ -69,25 +70,24 @@ const updateProduct = async (req, res, next) => {
       { new: true }
     );
     if (updatedProduct) {
-      res.status(200).json(updatedProduct);
+      return res.status(201).json(updatedProduct);
     } else {
-      res
+      return res
         .status(404)
         .json({ message: "Couldn't find the product for update it" });
     }
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Error for update the product" });
+    return res.status(500).json({ message: "Error for update the product" });
   }
 };
 
+// http://localhost:5000/api/products/delete-product/:id <- URL where the function is executed
 const deleteProduct = async (req, res, next) => {
   const productId = req.params.id;
-
   try {
     const deletedProduct = await Product.findByIdAndRemove(productId);
     if (deletedProduct) {
-      return res.status(200).json(deletedProduct);
+      return res.status(202).json(deletedProduct);
     } else {
       return res.status(404).json({ message: "Product not found for delete" });
     }

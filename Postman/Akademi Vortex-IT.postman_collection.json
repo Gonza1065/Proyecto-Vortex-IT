@@ -1,0 +1,376 @@
+{
+  "info": {
+    "_postman_id": "706a9d4e-3004-488a-bfc0-10e0cbd71258",
+    "name": "Akademi Vortex-IT",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30368572"
+  },
+  "item": [
+    {
+      "name": "GET ALL Products",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/products/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "products", ""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Products By CategoryID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/products/category/6540428fb310d74af6d3e110",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "products", "category", "6540428fb310d74af6d3e110"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Product By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/products/654042cdb310d74af6d3e113",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "products", "654042cdb310d74af6d3e113"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST Add Product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Computer\",\r\n    \"description\": \"A good computer for see videogames\",\r\n    \"category\": \"Technologies\",\r\n    \"price\": 150\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/products/add-product",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "products", "add-product"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PATCH Update Product By ID",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"iPhone 13\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/products/update-product/65404401b4c55b2e9fb579f1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": [
+            "api",
+            "products",
+            "update-product",
+            "65404401b4c55b2e9fb579f1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE Delete Product By ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/products/delete-product/6540f8297e545034a524dc6d",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": [
+            "api",
+            "products",
+            "delete-product",
+            "6540f8297e545034a524dc6d"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET ALL Categories",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/category/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "category", ""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Category By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/category/6540402503876d1b82e1a8b5",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "category", "6540402503876d1b82e1a8b5"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST Add Category",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Instruments\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/category/add-category",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "category", "add-category"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PATCH Update Category By ID",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Technologiessssss\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/category/update-category/6540428fb310d74af6d3e110",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": [
+            "api",
+            "category",
+            "update-category",
+            "6540428fb310d74af6d3e110"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE Delete Category By ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/category/delete-category/65426badf4533f62f8726e71",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": [
+            "api",
+            "category",
+            "delete-category",
+            "65426badf4533f62f8726e71"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET ALL Products In Cart",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/cart/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "cart", ""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Quantity Products In Cart",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/cart/quantity-products",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "cart", "quantity-products"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Price Total In Cart",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/cart/price-total",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "cart", "price-total"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST Product In Cart",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"productId\": \"654042cdb310d74af6d3e113\",\r\n    \"quantity\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/cart/add-product-cart/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "cart", "add-product-cart", ""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PATCH Update Product In Cart By ID",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"quantity\": 3\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/cart/update-product-cart/65425315e525e8fe56198f52",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": [
+            "api",
+            "cart",
+            "update-product-cart",
+            "65425315e525e8fe56198f52"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE Delete Product In Cart By ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/cart/delete-product-cart/65425315e525e8fe56198f52",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": [
+            "api",
+            "cart",
+            "delete-product-cart",
+            "65425315e525e8fe56198f52"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE Delete Cart",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/cart/delete-cart",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "cart", "delete-cart"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

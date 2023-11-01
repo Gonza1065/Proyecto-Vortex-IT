@@ -1,7 +1,10 @@
+// Importing mongoose for create the conexion with my DB
 const mongoose = require("mongoose");
 
+// Creating variable for my URI
 const URI_MONGODB = "mongodb://127.0.0.1/store";
 
+// Connecting of MongoDB Compass with my URI
 mongoose
   .connect(URI_MONGODB, {
     useUnifiedTopology: true,

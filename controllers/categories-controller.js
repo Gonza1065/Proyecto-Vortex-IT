@@ -1,5 +1,8 @@
+// Importing the models
 const Category = require("../models/category");
 const Product = require("../models/product");
+
+// http://localhost:5000/api/category/ <- URL where the function is executed
 const getCategories = async (req, res, next) => {
   try {
     const categories = await Category.find();
@@ -9,16 +12,15 @@ const getCategories = async (req, res, next) => {
       return res.status(404).json({ message: "Couldn't find the categories" });
     }
   } catch (err) {
-    console.log(err);
     return res
       .status(500)
       .json({ message: "Server error for find the categories" });
   }
 };
 
+// http://localhost:5000/api/category/:id <- URL where the function is executed
 const getCategoryById = async (req, res, next) => {
   const categoryId = req.params.id;
-
   try {
     const categoryFound = await Category.findById(categoryId);
     if (categoryFound) {
@@ -27,44 +29,40 @@ const getCategoryById = async (req, res, next) => {
       return res.status(404).json({ message: "Couldn't find the category" });
     }
   } catch (err) {
-    console.log(err);
     return res
       .status(500)
       .json({ message: "Server error for find the category" });
   }
 };
 
+// http://localhost:5000/api/category/add-category/ <- URL where the function is executed
 const addCategory = async (req, res, next) => {
   const { name } = req.body;
-
   try {
-    const existingCategory = await Product.findOne({ category: name });
+    const existingCategory = await Category.findOne({ name: name });
     if (existingCategory) {
-      return res.status(409).json({
-        message: "Couldn't add the category because already exist",
-      });
-    } else {
-      const newCategory = new Category({ name });
-      await newCategory.save();
-      return res.status(200).json(newCategory);
+      return res
+        .status(409)
+        .json({ message: "Couldn't create because already exist" });
     }
+    const newCategory = new Category({ name });
+    await newCategory.save();
+    return res.status(201).json(newCategory);
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({ message: "Error to the add the category" });
+    return res.status(500).json({ message: "Error couldn't add the category" });
   }
 };
 
+// http://localhost:5000/api/category/update-category/:id <- URL where the function is executed
 const updateCategory = async (req, res, next) => {
   const categoryId = req.params.id;
   const { name } = req.body;
-
   try {
     const updatedCategory = await Category.findByIdAndUpdate(
       categoryId,
       { name },
       { new: true }
     );
-
     if (updatedCategory) {
       return res.status(200).json(updatedCategory);
     } else {
@@ -73,14 +71,13 @@ const updateCategory = async (req, res, next) => {
         .json({ message: "Category not found for updating" });
     }
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ message: "Error updating the category" });
   }
 };
 
+// http://localhost:5000/api/category/delete-category/:id <- URL where the function is executed
 const deleteCategory = async (req, res, next) => {
   const categoryId = req.params.id;
-
   try {
     const categoryToDelete = await Category.findById(categoryId);
     if (!categoryToDelete) {
@@ -95,7 +92,6 @@ const deleteCategory = async (req, res, next) => {
     );
     return res.status(200).json(deletedCategory);
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ message: "Error for delete the category" });
   }
 };

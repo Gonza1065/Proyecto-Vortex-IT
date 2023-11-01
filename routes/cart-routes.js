@@ -1,9 +1,10 @@
 const express = require("express");
-
-const cartController = require("../controllers/cart-controller");
-
 const router = express.Router();
 
+// Declaring the controller for create the functions
+const cartController = require("../controllers/cart-controller");
+
+// Creating routes for the endpoints
 router.get("/", cartController.viewCart);
 router.get("/quantity-products", cartController.viewCartQuantity);
 router.get("/price-total", cartController.viewPriceTotal);
