@@ -92,6 +92,7 @@ const deleteCategory = async (req, res, next) => {
     );
     return res.status(200).json(deletedCategory);
   } catch (err) {
+    console.log(err);
     return res.status(500).json({ message: "Error for delete the category" });
   }
 };

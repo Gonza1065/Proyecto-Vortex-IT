@@ -24,7 +24,7 @@ const viewCart = async (req, res, next) => {
 // http://localhost:5000/api/cart/quantity-products <- URL where the function is executed
 const viewCartQuantity = async (req, res, next) => {
   try {
-    const existingCart = await Cart.findOne();
+    const existingCart = await Cart.findOne().populate("items.productId");
     if (!existingCart) {
       return res.status(404).json({ message: "The cart is empty" });
     }
@@ -32,9 +32,7 @@ const viewCartQuantity = async (req, res, next) => {
       (acc, item) => acc + item.quantity,
       0
     );
-    return res
-      .status(200)
-      .json({ message: `There are ${totalQuantity} products in the cart` });
+    return res.status(200).json({ message: totalQuantity });
   } catch (err) {
     console.log(err);
     return res
@@ -59,8 +57,7 @@ const viewPriceTotal = async (req, res, next) => {
         priceTotal += productPrice * quantity;
       }
     }
-
-    return res.status(200).json({ Total: `$${priceTotal}` });
+    return res.status(200).json({ total: `$${priceTotal}` });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Error for view price total" });
@@ -158,7 +155,7 @@ const deleteProductToCart = async (req, res, next) => {
 const deleteCart = async (req, res, next) => {
   try {
     const productsInCart = await Cart.find();
-    if (productsInCart.length < 0) {
+    if (productsInCart.length === 0) {
       return res
         .status(404)
         .json({ message: "There aren't products for delete" });
