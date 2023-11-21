@@ -10,14 +10,38 @@ const viewCart = async (req, res, next) => {
   });
   try {
     if (productsInCart.length > 0) {
-      return res.status(200).json(productsInCart);
+      const validProductsInCart = await Promise.all(
+        productsInCart.map(async (product) => {
+          const validItems = await Promise.all(
+            product.items.map(async (item) => {
+              const productExists = await Product.findById(item.productId);
+              return productExists ? item : null;
+            })
+          );
+          return validItems.some((item) => item !== null)
+            ? { ...product, items: validItems.filter((item) => item !== null) }
+            : null;
+        })
+      );
+      const finalCart = validProductsInCart.filter(
+        (product) => product !== null
+      );
+      if (finalCart.length > 0) {
+        return res.status(200).json(finalCart);
+      } else {
+        return res.status(404).json({
+          message: "There aren't valid products in the cart",
+        });
+      }
     } else {
       return res
         .status(404)
         .json({ message: "There aren't products in the cart" });
     }
   } catch (err) {
-    return res.status(500).json({ message: "Error to the find the products" });
+    return res
+      .status(500)
+      .json({ message: "Error finding valid products in the cart" });
   }
 };
 
@@ -105,6 +129,9 @@ const updateProductToCart = async (req, res, next) => {
         (item) => item.productId.toString() === productId
       );
       if (existingItem) {
+        if (updateData.quantity === 0) {
+          return res.status(409).json({ message: "Couldn't update to 0" });
+        }
         existingItem.quantity = updateData.quantity;
         await existingCart.save();
         return res.status(200).json(existingCart);
